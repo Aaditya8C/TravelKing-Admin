@@ -1,118 +1,109 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import SignUp from "@/components/LandingPages/SignUp";
+import ParentLayout from "@/components/Layouts/ParentLayout";
+import { SeaViewImage } from "@/components/constants/imageConstant";
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+// import LandingSea from '../public/Assets/Videos/landing.mp4'
+import { AnimatePresence, motion } from "framer-motion";
+import classNames from "classnames";
+import Register from "@/components/LandingPages/Register";
+import * as loginAnimationData from "../public/Assets/Lotties/loginLottie.json";
+import * as registerAnimationData from "../public/Assets/Lotties/registrationLottie.json";
+import Lottie from "react-lottie";
+import * as successfulAnimationData from "../public/Assets/Lotties/successful.json";
+import LodgeRegister from "@/components/popups/LodgeRegister";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const options = ["Login", "Register"];
+  const [isMember, setIsMember] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [selectedOption, setSelectedOPtion] = useState("Login");
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData:
+      selectedOption === "Login" ? loginAnimationData : registerAnimationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="h-screen w-screen relative">
+      {!isMember ? (
+        <div>
+          {/* <div
+      className="bg-cover bg-center bg-no-repeat h-screen w-screen"
+      // style={{ backgroundImage: `url(${SeaViewImage.src})` }}
+    > */}
+          <video
+            src="/Assets/Videos/landingCar.mp4"
+            autoPlay
+            loop
+            muted
+            className="absolute inset-0 h-screen"
+          />
+          {/* <div className="absolute bg-black opacity-30 inset-0" /> */}
+          <div className="absolute top-0 right-0 w-full lg:w-1/3  bg-[#fff] z-50 h-full rounded-s-3xl flex flex-col  justify-center items-center">
+            <div className="grid gap-2 text-center py-4">
+              <p className="via-violet-500 font-bold text-5xl">TravelKing</p>
+              <p className="font-semibold text-xl">Welcome to Admin Panel!</p>
+              <Lottie options={defaultOptions} width={200} height={200} />
+            </div>
+            <div className="w-[90%] h-1/2 rounded-xl shadow-lg  flex flex-col bg-gray-200">
+              <ul className="flex justify-center items-center w-full bg-gray-50 shrink-0">
+                {options.map((item, index) => {
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => setSelectedOPtion(item)}
+                      className={classNames(
+                        "rounded-t-md w-full py-2  m-1 h-full text-center relative md:cursor-pointer",
+                        selectedOption.includes(item) &&
+                          "bg-gray-300 font-semibold"
+                      )}
+                    >
+                      {item}
+                      {item === selectedOption && (
+                        <motion.div
+                          className="absolute inset-x-0 bottom-0 h-[2px] bg-violet-600"
+                          layoutId="underline"
+                        />
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -10, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full grid place-items-center shrink-0"
+                >
+                  {selectedOption === "Login" ? (
+                    <SignUp
+                      setIsMember={setIsMember}
+                      setIsSuccessful={setIsSuccessful}
+                    />
+                  ) : (
+                    <Register
+                      setIsMember={setIsMember}
+                      setIsSuccessful={setIsSuccessful}
+                    />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      ) : (
+        isSuccessful && <LodgeRegister />
+      )}
+    </div>
+  );
 }
