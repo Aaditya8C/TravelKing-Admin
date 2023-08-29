@@ -15,7 +15,7 @@ import LodgeRegister from "@/components/popups/LodgeRegister";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ userRegistered }) {
   const options = ["Login", "Register"];
   const [isMember, setIsMember] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <div className="h-screen w-screen relative">
-      {!isMember ? (
+      {!userRegistered ? (
         <div>
           {/* <div
       className="bg-cover bg-center bg-no-repeat h-screen w-screen"
@@ -102,8 +102,24 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        isSuccessful && <LodgeRegister />
+          <LodgeRegister />
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req, res } = context;
+  const { userToken } = req.cookies;
+  let userRegistered = false;
+
+  if (userToken) {
+    userRegistered = true;
+  }
+
+  return {
+    props: {
+      userRegistered: userRegistered
+    },
+  };
 }

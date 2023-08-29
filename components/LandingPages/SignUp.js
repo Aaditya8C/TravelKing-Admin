@@ -19,7 +19,7 @@ import PrimaryBtn from "../Button";
 
 // import teddyAnimation from "../../public/Assets/Rives/teddyRive.riv";
 
-const SignUp = ({ setIsMember, setIsSuccessful }) => {
+const SignUp = ({ setIsMember }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const router = useRouter();

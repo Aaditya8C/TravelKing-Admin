@@ -9,6 +9,7 @@ import { registerUser } from "@/config/apiRoutes";
 import Swal from "sweetalert2";
 import PrimaryBtn from "../Button";
 import { userState } from "../../store/userState";
+import { setCookie } from "cookies-next";
 
 const Register = ({ setIsMember, setIsSuccessful }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,6 +48,7 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
             email: response.data.email,
           });
           setIsMember(true);
+          setCookie("userToken",response.data.token);
           Swal.fire({
             title: "Registered Successfully",
             icon: "success",
@@ -54,7 +56,8 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
             allowEscapeKey: false,
           }).then((result) => {
             if (result.isConfirmed) {
-              setIsSuccessful(true);
+              // setIsSuccessful(true);
+              window.location.reload();
             }
           });
         }

@@ -12,7 +12,7 @@ const Header = () => {
           <FaHotel className="h-10 w-10" />
           <div>
             <p className="text-2xl font-bold">TravelKing</p>
-            <p>Hotel Admin Dashboard</p>
+            <p>Lodge Admin Dashboard</p>
           </div>
         </div>
 
