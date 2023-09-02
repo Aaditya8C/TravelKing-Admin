@@ -10,7 +10,7 @@ const PoupupLayout = ({ children }) => {
       transition={{ duration: 1 }}
       className="absolute inset-0 overflow-hidden z-50 flex justify-center items-center"
     >
-      <div className="bg-gray-100 w-[90%] md:w-[50vw] h-[85%] md:h-[65vh] rounded-lg shadow-xl">
+      <div className="bg-gray-100 w-[90%] md:w-[50vw] overflow-y-scroll h-[97svh] md:h-[65vh] lg:h-[80vh] rounded-lg shadow-xl scrollbar-none">
         {children}
       </div>
     </motion.div>

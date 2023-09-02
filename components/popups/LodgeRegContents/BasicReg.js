@@ -5,8 +5,16 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { userState } from "@/store/userState";
 import { lodgeState } from "@/store/lodgeState";
+import { SeaViewImage } from "@/components/constants/imageConstant";
+import Image from "next/image";
 
-const BasicReg = ({ setSelectedTab,control,errors,handleSubmit,register }) => {
+const BasicReg = ({
+  setSelectedTab,
+  control,
+  errors,
+  handleSubmit,
+  register,
+}) => {
   const beachOptions = [
     {
       value: "Nagaon Beach",
@@ -52,7 +60,6 @@ const BasicReg = ({ setSelectedTab,control,errors,handleSubmit,register }) => {
       });
     }
   };
-
 
   return (
     <motion.div
@@ -220,6 +227,35 @@ const BasicReg = ({ setSelectedTab,control,errors,handleSubmit,register }) => {
               )}
             </div>
           </div>
+        </div>
+
+        <div className="grid gap-2 py-4">
+          <p className="font-semibold">Upload Documents</p>
+          <p className="text-sm text-gray-500">
+            The maximum file size is 5MB and supported formats are jpeg and png
+          </p>
+          <input
+            type="file"
+            className="hidden"
+            id="inputFile"
+            accept="image/png, image/jpeg, image/jpg"
+            // onChange={onChangeAddCertificate}
+          />
+          <label
+            className="flex gap-4 relative items-center max-h-[80px] bg-violet-100 rounded-lg p-2 md:cursor-pointer border border-dashed border-violet-400"
+            htmlFor="inputFile"
+          >
+            <Image
+              alt="certificate"
+              src={SeaViewImage}
+              width={50}
+              height={50}
+              className="max-h-[80px]"
+            />
+            <p className="text-sm">
+              Please upload your photo of your Lodge
+            </p>
+          </label>
         </div>
 
         <div className="absolute inset-x-0 h-[2px] bg-gray-300 w-full"></div>

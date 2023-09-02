@@ -10,7 +10,7 @@ const RegHeader = ({ setSelectedTab, selectedTab }) => {
           return (
             <li
               key={index}
-              // onClick={() => setSelectedTab(index)}
+              onClick={() => setSelectedTab(index)}
               className="relative w-full text-center"
             >
               <p className="font-semibold text-lg">{tab}</p>
