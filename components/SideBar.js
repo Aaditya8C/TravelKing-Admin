@@ -43,14 +43,14 @@ const SideBar = () => {
             >
               <div
                 className={classNames(
-                  "absolute bg-violet-800 left-0 w-0 h-12 rounded-r-md transition-all duration-500",
+                  "absolute bg-violet-800 left-0 w-0 h-12 rounded-r-md transition-all duration-500 group",
                   selected.includes(item.name) && "w-2"
                 )}
               />
-              <div className="hover:bg-violet-200 p-4 rounded-lg group transition-all duration-300">
-              <Icon className="shrink-0 group-hover:text-violet-950 w-8 h-8" />
+              <div className="hover:bg-violet-200 p-4 rounded-lg  transition-all duration-200">
+              <Icon className="shrink-0 group-hover:text-violet-950 w-8 h-8 transition-all duration-200" />
               </div>
-              <p className="shrink-0 transition-all duration-200 hover:text-violet-800 hidden lg:block">
+              <p className="shrink-0 transition-all duration-200 group-hover:text-violet-800 hidden lg:block">
                 {item.name}
               </p>
               {/* <div className="flex justify-end w-full">

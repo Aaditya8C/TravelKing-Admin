@@ -2,6 +2,7 @@ import axios from "axios";
 import https from "https";
 
 const BASEURL = process.env.NEXT_PUBLIC_API_HOST;
+const CLOUDINARYURL = process.env.NEXT_PUBLIC_CLOUDINARY_API_HOST;
 
 let timeout = 30000;
 const httpsAgent = new https.Agent({
@@ -49,8 +50,14 @@ export const getRequest = ({ url, params = "" }) => {
 };
 
 export const postRequest = ({ url, params = "", body }) => {
-  console.log("base url", BASEURL +  url);
   return axiosDefaultInstance.post(`${BASEURL + url + params}`, body, {
+    timeout: timeout,
+  });
+};
+
+
+export const postRequestForImage = ({ url, params = "", body }) => {
+  return axiosDefaultInstance.post(`${CLOUDINARYURL + url + params}`, body, {
     timeout: timeout,
   });
 };

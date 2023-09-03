@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import PrimaryBtn from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
@@ -7,6 +7,8 @@ import { userState } from "@/store/userState";
 import { lodgeState } from "@/store/lodgeState";
 import { SeaViewImage } from "@/components/constants/imageConstant";
 import Image from "next/image";
+import { postRequest, postRequestForImage } from "@/config/axiosInterceptor";
+import { imageUpload } from "@/config/apiRoutes";
 
 const BasicReg = ({
   setSelectedTab,
@@ -45,6 +47,11 @@ const BasicReg = ({
   const userDetails = userState((state) => state.user);
   const setLodgeDetails = lodgeState((state) => state.setLodge);
   const lodgeDetails = lodgeState((state) => state.lodge);
+  const [lodgeImage, setLodgeImage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  console.log(userDetails);
+
 
   const onSubmit = async (data) => {
     setSelectedTab(1);
@@ -56,10 +63,35 @@ const BasicReg = ({
           landmark: data.landmark,
           beachPlace: data.beach.value,
           contact: data.contact,
+          lodge_image: lodgeImage,
         },
       });
     }
   };
+
+  
+  
+
+  const onLodgeImageChange = async (files) => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "o81661w8");
+
+    try {
+      const response = await postRequestForImage({
+        url: imageUpload,
+        body: formData,
+      });
+
+      if (response.status) {
+        setLodgeImage(response.data.url);
+        setIsDisabled(false);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+  
 
   return (
     <motion.div
@@ -239,7 +271,7 @@ const BasicReg = ({
             className="hidden"
             id="inputFile"
             accept="image/png, image/jpeg, image/jpg"
-            // onChange={onChangeAddCertificate}
+            onChange={(event) => onLodgeImageChange(event.target.files)}
           />
           <label
             className="flex gap-4 relative items-center max-h-[80px] bg-violet-100 rounded-lg p-2 md:cursor-pointer border border-dashed border-violet-400"
@@ -247,20 +279,18 @@ const BasicReg = ({
           >
             <Image
               alt="certificate"
-              src={SeaViewImage}
+              src={lodgeImage ? lodgeImage : SeaViewImage}
               width={50}
               height={50}
               className="max-h-[80px]"
             />
-            <p className="text-sm">
-              Please upload your photo of your Lodge
-            </p>
+            <p className="text-sm">Please upload your photo of your Lodge</p>
           </label>
         </div>
 
         <div className="absolute inset-x-0 h-[2px] bg-gray-300 w-full"></div>
         <div className="flex justify-end gap-4 pt-6">
-          <PrimaryBtn text="Save & Next" />
+          <PrimaryBtn text="Save & Next" isDisabled={isDisabled} />
         </div>
       </form>
     </motion.div>

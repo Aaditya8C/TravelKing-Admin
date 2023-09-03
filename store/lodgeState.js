@@ -9,6 +9,7 @@ export const lodgeState = create((set) => ({
       landmark: "",
       beachPlace: "",
       contact: "",
+      lodge_image:"",
     },
     facilityDetails: {
       isSwimmingPool: "",

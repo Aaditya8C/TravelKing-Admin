@@ -15,6 +15,7 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
   const [showPassword, setShowPassword] = useState(false);
   const setUserDetails = userState((state) => state.setUser);
 
+
   const {
     register,
     handleSubmit,
@@ -67,6 +68,7 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
       }
     }
   };
+
 
   return (
     <motion.div

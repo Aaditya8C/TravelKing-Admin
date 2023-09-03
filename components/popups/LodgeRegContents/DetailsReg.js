@@ -90,6 +90,7 @@ const DetailsReg = ({control,errors,handleSubmit,register,setSelectedTab}) => {
             landmark: lodgeDetails.basicDetails.landmark,
             beachPlace: lodgeDetails.basicDetails.beachPlace,
             contact: lodgeDetails.basicDetails.contact,
+            lodge_image:lodgeDetails.basicDetails.lodge_image,
             total_rooms: data.rooms.value,
             isParkingAvailable: data.parking.value,
             isSwimmingPool: data.swimmingPool.value,

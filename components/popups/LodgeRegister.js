@@ -23,6 +23,7 @@ const LodgeRegister = () => {
       isSwimmingPool: "",
       isParkingAvailable: "",
       total_rooms: "",
+      lodge_image: "",
     },
   });
   return (
