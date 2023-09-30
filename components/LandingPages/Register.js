@@ -11,7 +11,7 @@ import PrimaryBtn from "../Button";
 import { userState } from "../../store/userState";
 import { setCookie } from "cookies-next";
 
-const Register = ({ setIsMember, setIsSuccessful }) => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const setUserDetails = userState((state) => state.setUser);
 
@@ -48,7 +48,6 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
             username: response.data.username,
             email: response.data.email,
           });
-          setIsMember(true);
           setCookie("userToken",response.data.token);
           Swal.fire({
             title: "Registered Successfully",
@@ -57,7 +56,6 @@ const Register = ({ setIsMember, setIsSuccessful }) => {
             allowEscapeKey: false,
           }).then((result) => {
             if (result.isConfirmed) {
-              // setIsSuccessful(true);
               window.location.reload();
             }
           });

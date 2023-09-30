@@ -16,12 +16,14 @@ import { loginUser } from "@/config/apiRoutes";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import PrimaryBtn from "../Button";
+import { loggedInState } from "@/store/loggedInState";
 
 // import teddyAnimation from "../../public/Assets/Rives/teddyRive.riv";
 
-const SignUp = ({ setIsMember }) => {
+const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const setIsUserLoggedIn = loggedInState((state) => state.setIsUserLoggedIn);
   const router = useRouter();
   const {
     register,
@@ -48,7 +50,6 @@ const SignUp = ({ setIsMember }) => {
         });
 
         if (response) {
-          setIsMember(true);
           Swal.fire({
             title: "Logged in Successfully",
             icon: "success",
@@ -56,6 +57,7 @@ const SignUp = ({ setIsMember }) => {
             allowEscapeKey: false,
           }).then((result) => {
             if (result.isConfirmed) {
+              setIsUserLoggedIn(true);
               router.push("/dashboard");
             }
           });
@@ -139,7 +141,7 @@ const SignUp = ({ setIsMember }) => {
                   id="password"
                   placeholder=" "
                   required
-                autoComplete="off"
+                  autoComplete="off"
                   className="outline-none w-full h-full peer p-4 lg:p-2 rounded-md"
                   {...register("password", {
                     required: {
@@ -171,7 +173,7 @@ const SignUp = ({ setIsMember }) => {
             </div>
 
             <div className="grid place-items-center gap-4">
-              <PrimaryBtn text="Register" />
+              <PrimaryBtn text="Login" />
               {/* <p>
                 Don't have an account?{" "}
                 <span

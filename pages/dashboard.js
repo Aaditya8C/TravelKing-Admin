@@ -1,10 +1,13 @@
 import StatusCards from "@/components/Dashboard/StatusCards";
+import ErrorPage from "@/components/ErrorPage";
 import Header from "@/components/Header";
 import ParentLayout from "@/components/Layouts/ParentLayout";
+import { loggedInState } from "@/store/loggedInState";
 import React, { useState } from "react";
 import { IoBedOutline } from "react-icons/io5";
 
 const dashboard = () => {
+  const isUserLoggedIn = loggedInState((state) => state.isUserLoggedIn);
   const statusCardsInfo = [
     {
       icon: IoBedOutline ,
@@ -27,7 +30,7 @@ const dashboard = () => {
       heading: "Activities Offered",
     },
   ];
-  return (
+  return isUserLoggedIn ?(
     <ParentLayout>
       <div className="p-4 md:p-8 lg:p-14">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 place-items-center">
@@ -37,6 +40,8 @@ const dashboard = () => {
         </div>
       </div>
     </ParentLayout>
+  ): (
+    <ErrorPage/>
   );
 };
 

@@ -12,14 +12,15 @@ import * as registerAnimationData from "../public/Assets/Lotties/registrationLot
 import Lottie from "react-lottie";
 import * as successfulAnimationData from "../public/Assets/Lotties/successful.json";
 import LodgeRegister from "@/components/popups/LodgeRegister";
+import { loggedInState } from "@/store/loggedInState";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ userRegistered }) {
   const options = ["Login", "Register"];
-  const [isMember, setIsMember] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
   const [selectedOption, setSelectedOPtion] = useState("Login");
+
+  const setIsUserLoggedIn = loggedInState((state) => state.setIsUserLoggedIn);
 
   const defaultOptions = {
     loop: true,
@@ -30,6 +31,11 @@ export default function Home({ userRegistered }) {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+
+  useEffect(() => {
+    setIsUserLoggedIn(userRegistered);
+  }, [userRegistered])
+  
 
   return (
     <div className="h-screen w-screen relative">
@@ -87,13 +93,9 @@ export default function Home({ userRegistered }) {
                 >
                   {selectedOption === "Login" ? (
                     <SignUp
-                      setIsMember={setIsMember}
-                      setIsSuccessful={setIsSuccessful}
                     />
                   ) : (
                     <Register
-                      setIsMember={setIsMember}
-                      setIsSuccessful={setIsSuccessful}
                     />
                   )}
                 </motion.div>
